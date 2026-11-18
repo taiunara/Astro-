@@ -99,10 +99,10 @@ class CardView: UIView, ViewCode {
     func addSubviews() {
         addSubview(backgroundImageView)
         addSubview(cardContainerView)
+        addSubview(descriptionLabel)
 
         cardContainerView.addSubview(frontCardView)
         frontCardView.addSubview(frontCardImageView)
-        frontCardView.addSubview(descriptionLabel)
 
         cardContainerView.addSubview(backCardView)
         backCardView.addSubview(backCardImageView)
@@ -136,7 +136,7 @@ class CardView: UIView, ViewCode {
             frontCardImageView.leadingAnchor.constraint(equalTo: frontCardView.leadingAnchor),
             frontCardImageView.trailingAnchor.constraint(equalTo: frontCardView.trailingAnchor),
             
-            descriptionLabel.topAnchor.constraint(equalTo: frontCardImageView.bottomAnchor, constant: 20),
+            descriptionLabel.topAnchor.constraint(equalTo: cardContainerView.bottomAnchor, constant: 20),
             descriptionLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 40),
             descriptionLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -40),
             
@@ -150,7 +150,7 @@ class CardView: UIView, ViewCode {
             backCardImageView.leadingAnchor.constraint(equalTo: backCardView.leadingAnchor),
             backCardImageView.trailingAnchor.constraint(equalTo: backCardView.trailingAnchor),
             
-            saveButton.bottomAnchor.constraint(equalTo: backCardImageView.bottomAnchor, constant: 100),
+            saveButton.bottomAnchor.constraint(equalTo: backCardImageView.bottomAnchor, constant: 80),
             saveButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 90),
             saveButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -90),
             saveButton.heightAnchor.constraint(equalToConstant: 50)
@@ -174,6 +174,7 @@ class CardView: UIView, ViewCode {
                    }
                )
         isShowingBack.toggle()
+        descriptionLabel.isHidden = isShowingBack
     }
     
     func animateCardEntrance() {
