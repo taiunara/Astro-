@@ -27,6 +27,8 @@ class OnboardingViewController: UIViewController {
     
     @objc
     func didTapStartButton() {
+        print("Botão do onboarding pressionado!")
+
         navigationController?.pushViewController(
             HomeViewController(),
             animated: true

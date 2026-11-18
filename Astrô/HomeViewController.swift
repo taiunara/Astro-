@@ -1,26 +1,41 @@
-//
-//  HomeViewController.swift
-//  Astrô
-//
-//  Created by Tainara Nascimento on 16/11/26.
-//
+    //
+    //  HomeViewController.swift
+    //  Astrô
+    //
+    //  Created by Tainara Nascimento on 16/11/26.
+    //
 
-import UIKit
 
-class HomeViewController: UIViewController {
+    import UIKit
 
-    private lazy var homeView: HomeView = {
-        return HomeView()
-    }()
+    class HomeViewController: UIViewController {
 
-    override func loadView() {
-        super.loadView()
-        self.view = homeView
+        private lazy var homeView: HomeView = {
+            return HomeView()
+        }()
+
+        override func loadView() {
+            self.view = homeView
+        }
+
+        override func viewDidLoad() {
+            super.viewDidLoad()
+
+            print("HomeViewController carregou!")
+
+            homeView.configureTargetTap(
+                target: self,
+                action: #selector(didTapTarget)
+            )
+        }
+        
+        @objc
+        func didTapTarget() {
+            navigationController?.pushViewController(
+                CardViewController(),
+                animated: true
+            )
+        }   
+
+      
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        homeView.setup(titleText: "Task Master", addTaskButtonTitle: "Add Task")
-    }
-}
