@@ -28,10 +28,7 @@ class OnboardingView: UIView, ViewCode {
         label.textColor = .white
         label.textAlignment = .center
         label.numberOfLines = 2
-      //  label.backgroundColor = .systemBlue
-        
-        
-        
+    
         return label
     }()
     
@@ -83,8 +80,6 @@ class OnboardingView: UIView, ViewCode {
         addSubview(titleLabel)
         addSubview(descriptionLabel)
         addSubview(startButton)
-        
-        
     }
     
     func setupConstraints() {
@@ -94,7 +89,7 @@ class OnboardingView: UIView, ViewCode {
             backgroundImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             backgroundImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 100),
+            titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 150),
             titleLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 24),
             titleLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -24),
             
@@ -102,8 +97,7 @@ class OnboardingView: UIView, ViewCode {
             descriptionLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 40),
             descriptionLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -40),
             
-            
-            startButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -100),
+            startButton.bottomAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 100),
             startButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 60),
             startButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -60),
             startButton.heightAnchor.constraint(equalToConstant: 50)

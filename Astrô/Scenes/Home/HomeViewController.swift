@@ -33,7 +33,7 @@
         func didTapTarget() {
             navigationController?.pushViewController(
                 CardViewController(),
-                animated: true
+                animated: false
             )
         }   
 
