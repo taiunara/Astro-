@@ -9,6 +9,8 @@ import UIKit
 
 class HomeView: UIView, ViewCode {
     
+    var hasViewedTodayCard = false
+    
     private lazy var backgroundImageView: UIImageView = {
         let imageView = UIImageView()
         
@@ -72,6 +74,22 @@ class HomeView: UIView, ViewCode {
         return label
     }()
     
+    private lazy var textLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(
+            name: "GoogleSansFlex24pt-Regular",
+            size: 20
+        )
+        label.text = "Você já visualizou a sua carta \ndo dia, volte amanhã para ganhar uma nova"
+        label.textColor = .white
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.isHidden = true
+        
+        return label
+    }()
+    
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
@@ -103,15 +121,22 @@ class HomeView: UIView, ViewCode {
             descriptionLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 40),
             descriptionLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -40),
             
-         
+            textLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            textLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            textLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 40),
+            textLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -40),
 
             
         ])
     }
     
     func setupStyles() {
-        animateTargets()
-        animateDescription()
+        updateCardStatus()
+
+        if !hasViewedTodayCard {
+            animateTargets()
+            animateDescription()
+        }
     }
     
     func animateTargets() {
@@ -146,6 +171,22 @@ class HomeView: UIView, ViewCode {
         )
     }
     
+    func updateCardStatus() {
+
+        if hasViewedTodayCard {
+            targetImageView.isHidden = true
+            target2ImageView.isHidden = true
+            descriptionLabel.isHidden = true
+            textLabel.isHidden = false
+
+        } else {
+            targetImageView.isHidden = false
+            target2ImageView.isHidden = false
+            descriptionLabel.isHidden = false
+            textLabel.isHidden = true
+        }
+    }
+    
     
     func configureTargetTap(target: Any?, action: Selector) {
         let tapBig = UITapGestureRecognizer(
@@ -173,6 +214,7 @@ class HomeView: UIView, ViewCode {
         addSubview(descriptionLabel)
         addSubview(targetImageView)
         addSubview(target2ImageView)
+        addSubview(textLabel)
        
         
     }

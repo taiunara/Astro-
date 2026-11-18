@@ -95,6 +95,10 @@ class CardView: UIView, ViewCode {
         container.translatesAutoresizingMaskIntoConstraints = false
         return container
     }()
+    
+    func configureSaveButton(target: Any?, action: Selector) {
+        saveButton.addTarget(target, action: action, for: .touchUpInside)
+    }
 
     func addSubviews() {
         addSubview(backgroundImageView)
@@ -106,7 +110,7 @@ class CardView: UIView, ViewCode {
 
         cardContainerView.addSubview(backCardView)
         backCardView.addSubview(backCardImageView)
-        backCardView.addSubview(saveButton)
+        addSubview(saveButton)
     }
 
     func setupConstraints() {
@@ -150,9 +154,10 @@ class CardView: UIView, ViewCode {
             backCardImageView.leadingAnchor.constraint(equalTo: backCardView.leadingAnchor),
             backCardImageView.trailingAnchor.constraint(equalTo: backCardView.trailingAnchor),
             
-            saveButton.bottomAnchor.constraint(equalTo: backCardImageView.bottomAnchor, constant: 80),
-            saveButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 90),
-            saveButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -90),
+            saveButton.topAnchor.constraint(
+                equalTo: backCardView.bottomAnchor, constant: 20),
+            saveButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 100),
+            saveButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -100),
             saveButton.heightAnchor.constraint(equalToConstant: 50)
 
            
@@ -161,6 +166,7 @@ class CardView: UIView, ViewCode {
 
     func setupStyles() {
         backCardView.isHidden = true
+        saveButton.isHidden = true
     }
     
     func flipCard() {
@@ -175,6 +181,7 @@ class CardView: UIView, ViewCode {
                )
         isShowingBack.toggle()
         descriptionLabel.isHidden = isShowingBack
+        saveButton.isHidden = !isShowingBack
     }
     
     func animateCardEntrance() {
@@ -192,12 +199,29 @@ class CardView: UIView, ViewCode {
         )
     }
     
+    func animateCardExit(completion: @escaping () -> Void) {
+        UIView.animate(
+            withDuration: 0.8,
+            delay: 0,
+            options: [.curveEaseIn],
+            animations: {
+                self.cardContainerView.alpha = 0
+                self.cardContainerView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+                self.saveButton.alpha = 0
+            },
+            completion: { _ in
+                completion()
+            }
+        )
+    }
+    
     func configureCardTap(target: Any?, action: Selector) {
         let tapFront = UITapGestureRecognizer(target: target, action: action)
         let tapBack = UITapGestureRecognizer(target: target, action: action)
 
         frontCardView.addGestureRecognizer(tapFront)
         backCardView.addGestureRecognizer(tapBack)
+        tapBack.cancelsTouchesInView = false
     }
 
     init() {

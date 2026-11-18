@@ -31,11 +31,22 @@
         
         @objc
         func didTapTarget() {
+            let cardVC = CardViewController()
+
+            cardVC.onCardSaved = { [weak self] in
+                guard let self = self else { return }
+
+                self.homeView.hasViewedTodayCard = true
+                self.homeView.updateCardStatus()
+
+                self.navigationController?.popViewController(animated: false)
+            }
+
             navigationController?.pushViewController(
-                CardViewController(),
+                cardVC,
                 animated: false
             )
-        }   
+        }
 
       
     }

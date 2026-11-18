@@ -9,6 +9,8 @@
 import UIKit
 
 class CardViewController: UIViewController {
+    
+    var onCardSaved: (() -> Void)?
 
     private lazy var cardView: CardView = {
         return CardView()
@@ -28,6 +30,12 @@ class CardViewController: UIViewController {
             target: self,
             action: #selector(didTapCard)
         )
+        
+        
+        cardView.configureSaveButton(
+            target: self,
+            action: #selector(didTapSaveButton)
+        )
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -40,6 +48,18 @@ class CardViewController: UIViewController {
     func didTapCard() {
         cardView.flipCard()
     }
+    
+    @objc
+    func didTapSaveButton() {
+        cardView.isUserInteractionEnabled = false
+        cardView.animateCardExit { [weak self] in
+            self?.onCardSaved?()
+        }
+    }
+    
+   
+    
+    
     
     
 }
